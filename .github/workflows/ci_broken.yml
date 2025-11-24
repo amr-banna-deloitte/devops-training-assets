@@ -18,7 +18,8 @@ jobs:
       run:
         working-directory: app
     steps:
-      # Missing checkout step
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node (wrong key)
         uses: actions/setup-node@v4
