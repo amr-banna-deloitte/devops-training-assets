@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies (prod only)
         run: npm i --production
 
+      - name: Install dependencies
+        run: npm ci
+        
       - name: Lint
         run: npm run lint
 
