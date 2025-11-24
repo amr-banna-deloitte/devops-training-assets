@@ -3,6 +3,7 @@
 FROM node:18-alpine AS base
 WORKDIR /usr/src/app
 COPY package.json .
+COPY package-lock.json .
 RUN npm ci --only=production
 COPY src ./src
 EXPOSE 3000
