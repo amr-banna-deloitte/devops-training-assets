@@ -6,6 +6,7 @@ on: [push, pull_request]
 # Missing packages: write permission will break GHCR push
 permissions:
   contents: read
+  packages: write
 
 env:
   REGISTRY: ghcr.io
