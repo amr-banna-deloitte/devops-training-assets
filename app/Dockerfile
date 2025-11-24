@@ -1,0 +1,9 @@
+
+# syntax=docker/dockerfile:1
+FROM node:18-alpine AS base
+WORKDIR /usr/src/app
+COPY package.json .
+RUN npm ci --only=production
+COPY src ./src
+EXPOSE 3000
+CMD ["node", "src/server.js"]

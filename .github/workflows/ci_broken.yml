@@ -1,0 +1,56 @@
+
+name: CI (Broken)
+
+on: [push, pull_request]
+
+# Missing packages: write permission will break GHCR push
+permissions:
+  contents: read
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    steps:
+      # Missing checkout step
+
+      - name: Setup Node (wrong key)
+        uses: actions/setup-node@v4
+        with:
+          node: '16.x'  # should be node-version: 18.x
+
+      - name: Install dependencies (prod only)
+        run: npm i --production
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test -- --ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload build artifact (wrong path)
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-dist
+          path: app/build/**
+
+  docker:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build image without login (will fail on push)
+        run: |
+          docker build -t $REGISTRY/$IMAGE_NAME:latest ./app
+          docker push $REGISTRY/$IMAGE_NAME:latest
