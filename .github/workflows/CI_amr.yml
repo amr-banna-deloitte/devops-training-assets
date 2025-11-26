@@ -16,9 +16,6 @@ env:
 jobs:
   build-test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: app
     steps:
       - run: |
           ls ${{github.workspace}}
