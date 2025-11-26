@@ -11,7 +11,7 @@ permissions:
  
 env:
   REGISTRY: ghcr.io
-  # IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository }}
  
 jobs:
   build-test:
@@ -20,6 +20,8 @@ jobs:
       run:
         working-directory: app
     steps:
+      - run: |
+          ls ${{github.workspace}}
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
