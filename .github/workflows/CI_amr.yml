@@ -19,4 +19,13 @@ jobs:
     defaults:
       run:
         working-directory: app
- 
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+          cache: 'npm'
+          cache-dependancy-path: app/package-lock.json
+      - run: npm ci
+        # working-directory: app
+      - run: npm test
