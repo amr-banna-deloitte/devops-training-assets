@@ -11,14 +11,14 @@ permissions:
  
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  # IMAGE_NAME: ${{ github.repository }}
  
 jobs:
   build-test:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ../app
+        working-directory: app
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
